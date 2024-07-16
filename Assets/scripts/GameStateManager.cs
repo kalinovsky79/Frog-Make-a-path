@@ -42,6 +42,8 @@ public class GameStateManager : MonoBehaviour
 
 	private void GameManager_GameWin(object sender, System.EventArgs e)
 	{
+		upTimer.StopTimer();
+		gameManager.StopGame();
 		gameScreenManager.ToFinalPage();
 	}
 

@@ -11,11 +11,13 @@ public class PathPoint : MonoBehaviour
 
 	// так как свечение зашито в шейдерах, я пока зне знаю как передать из инспектора переполненные цвета
 	[SerializeField] private Color fadedColor;
-	//[SerializeField] private Color shineColor;
+	[SerializeField] private Color shineColor;
 
 	//Color(1.58884215,0.868569791,0.332757533,1)
 
 	public int pointNo = 0;
+
+	private ScaleAppear numberHead;
 
 	private PathRoot _pathRoot;
 	private PressGesture pressGesture;
@@ -51,26 +53,29 @@ public class PathPoint : MonoBehaviour
 		{
 			duration = 0.7f,
 			valueA = fadedColor,
-			valueB = cShineEmission,
+			//valueB = cShineEmission,
+			valueB = shineColor,
 			OnAnimationStep = (c) =>
 			{
 				changeColor(renderersToShine, c);
 			}
 		};
 
-		//animateShineColor = new AnimateFloat
-		//{
-		//	duration = 0.8f,
-		//	valueA = 0.0f,
-		//	valueB = 3f,
-		//	OnAnimationStep = (c) =>
-		//	{
-		//		changeEmission(renderersToShine, c);
-		//	}
-		//};
+		StartCoroutine(init());
 	}
 
 	private bool goingToShine = false;
+
+	private IEnumerator init()
+	{
+		yield return new WaitForEndOfFrame();
+		numberHead = GetComponentInChildren<ScaleAppear>();
+	}
+
+	public void AppearNumber(bool a)
+	{
+		numberHead.Appear(a);
+	}
 
 	private IEnumerator letsShine(bool shine)
 	{
@@ -79,12 +84,14 @@ public class PathPoint : MonoBehaviour
 		if (shine)
 		{
 			animateShineColor.valueA = fadedColor;
-			animateShineColor.valueB = cShineEmission;
+			//animateShineColor.valueB = cShineEmission;
+			animateShineColor.valueB = shineColor;
 		}
 		else
 		{
 			animateShineColor.valueB = fadedColor;
-			animateShineColor.valueA = cShineEmission;
+			//animateShineColor.valueA = cShineEmission;
+			animateShineColor.valueA = shineColor;
 		}
 
 		while (animateShineColor.update(null))
@@ -101,9 +108,9 @@ public class PathPoint : MonoBehaviour
 	{
 		foreach (var r in renderers)
 		{
-			//r.material.color = newColor;
+			r.material.color = newColor;
 
-			r.material.SetColor("_EmissionColor", newColor * Mathf.LinearToGammaSpace(1.0f));
+			//r.material.SetColor("_EmissionColor", newColor * Mathf.LinearToGammaSpace(1.0f));
 		}
 	}
 

@@ -41,5 +41,7 @@ public class CountUpTimer : MonoBehaviour
 		timeText.text = gameTime.ToString();
 
 		Expired?.Invoke(this, gameTime);
+
+		timeText.text = 0.ToString();
 	}
 }

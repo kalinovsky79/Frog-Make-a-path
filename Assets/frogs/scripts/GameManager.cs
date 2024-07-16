@@ -51,6 +51,7 @@ public class GameManager : MonoBehaviour
 		//currentFrog = randomListFrog.Next();
 		// и так же создать из префаба, в установленной точке создания
 		//currentPath.ResetWay();
+		currentPath.AppearNumbers(true);
 		currentPath.TurnIncreaseBuildWay();
 		currentPath.TurnOn();
 	}
@@ -58,6 +59,7 @@ public class GameManager : MonoBehaviour
 	public void StopGame()
 	{
 		currentPath.TurnOff();
+		currentPath.AppearNumbers(false);
 	}
 
 	private void CurrentPath_UserAnswer(object sender, bool e)
@@ -92,6 +94,7 @@ public class GameManager : MonoBehaviour
 		{
 			currentPath.ResetWay();
 			currentPath.TurnOff();
+			passCount = 0;
 			GameWin?.Invoke(this, EventArgs.Empty);
 		}
 	}

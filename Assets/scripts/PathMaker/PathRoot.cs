@@ -53,6 +53,14 @@ public class PathRoot : MonoBehaviour
 		TurnIncreaseBuildWay();
 	}
 
+	public void AppearNumbers(bool a)
+	{
+		foreach (var point in points)
+		{
+			point.AppearNumber(a);
+		}
+	}
+
 	public void ResetWay()
 	{
 		pathDone = false;
